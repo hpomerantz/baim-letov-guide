@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך רכז מחשוב | באים לטוב</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #0d9488;
+  --teal-light: #14b8a6;
+  --teal-dark: #0f766e;
+  --amber: #f59e0b;
+  --slate-bg: #f8fafc;
+  --card-shadow: 0 4px 24px rgba(13,148,136,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--slate-bg);
+  color: #1e293b;
+  direction: rtl;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+/* ── CONTENT ── */
+#content {
+  padding: 24px 20px;
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 100%;
+}
+.page { display: none; }
+.page.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+  min-height: calc(100vh - 180px);
+  width: 100%;
+}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+/* ── TOP HEADER ── */
+#header {
+  background: #0f172a;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 3px solid var(--teal);
+  width: 100%;
+}
+#header img { width: 52px; height: auto; border-radius: 6px; background: #fff; padding: 3px; }
+#header-text h1 { color: #fff; font-size: 1rem; font-weight: 800; }
+#header-text p { color: #94a3b8; font-size: 0.7rem; font-weight: 300; margin-top: 2px; }
+
+/* ── SEARCH BAR ── */
+#searchbar {
+  background: #fff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#searchbar svg { flex-shrink: 0; }
+#searchbar input {
+  border: none;
+  outline: none;
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.875rem;
+  color: #334155;
+  width: 100%;
+  direction: rtl;
+  background: transparent;
+}
+#searchbar input::placeholder { color: #94a3b8; }
+
+/* ── NAV TABS ── */
+#nav {
+  background: #fff;
+  border-bottom: 2px solid #e2e8f0;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 12px;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+#nav::-webkit-scrollbar { height: 3px; }
+.nav-group {
+  display: inline-flex;
+  align-items: center;
+  border-left: 1px solid #e2e8f0;
+  padding: 0 4px;
+}
+.nav-group:first-child { border-left: none; }
+.nav-group-label {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0 6px;
+  display: none;
+}
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 500;
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  text-decoration: none;
+}
+.nav-tab:hover { color: var(--teal); background: #f0fdfa; }
+.nav-tab.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 700; }
+.nav-tab svg { width: 13px; height: 13px; opacity: 0.7; flex-shrink: 0; }
+.nav-tab.active svg { opacity: 1; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PAGE HEADER ── */
+.page-header { margin-bottom: 24px; }
+.page-header .breadcrumb {
+  font-size: 0.72rem; color: #94a3b8; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 5px;
+}
+.page-header h2 { font-size: 1.5rem; font-weight: 800; color: #0f172a; }
+.page-header p { color: #64748b; margin-top: 6px; font-size: 0.875rem; font-weight: 300; line-height: 1.7; }
+
+/* ── CARDS ── */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid #f1f5f9;
+  transition: box-shadow 0.2s;
+  width: 100%;
+}
+.card:hover { box-shadow: 0 8px 32px rgba(13,148,136,0.13); }
+.card-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-title .icon-wrap {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+/* ── INFO BOXES ── */
+.info-box {
+  border-right: 4px solid;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.info-box.tip { border-color: var(--teal); background: #f0fdfa; color: #0f766e; }
+.info-box.warning { border-color: var(--amber); background: #fffbeb; color: #92400e; }
+.info-box.info { border-color: #6366f1; background: #eef2ff; color: #3730a3; }
+.info-box strong { font-weight: 700; display: block; margin-bottom: 4px; }
+
+/* ── STEPS ── */
+.steps { counter-reset: step; }
+.step-item {
+  display: flex; gap: 14px; margin-bottom: 18px; position: relative;
+}
+.step-item::before {
+  content: counter(step); counter-increment: step;
+  width: 28px; height: 28px; background: var(--teal); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0; position: relative; z-index: 1;
+}
+.step-item::after {
+  content: ''; position: absolute; top: 28px; right: 13px;
+  width: 2px; height: calc(100% + 2px); background: #e2e8f0;
+}
+.step-item:last-child::after { display: none; }
+.step-content { padding-top: 2px; }
+.step-content h4 { font-weight: 700; font-size: 0.875rem; color: #0f172a; margin-bottom: 3px; }
+.step-content p { font-size: 0.825rem; color: #64748b; line-height: 1.6; }
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.825rem; }
+.data-table th {
+  background: #f8fafc; padding: 10px 14px; text-align: right;
+  font-weight: 700; color: #475569; font-size: 0.72rem;
+  letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;
+}
+.data-table td {
+  padding: 10px 14px; border-bottom: 1px solid #f1f5f9;
+  color: #334155; vertical-align: top;
+}
+.data-table tr:hover td { background: #f8fafc; }
+
+/* ── TAGS ── */
+.tag {
+  display: inline-block; font-size: 0.68rem; font-weight: 600;
+  padding: 2px 9px; border-radius: 20px;
+}
+.tag-green { background: #d1fae5; color: #065f46; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-amber { background: #fef3c7; color: #92400e; }
+.tag-red { background: #fee2e2; color: #991b1b; }
+
+/* ── FAQ ── */
+.faq-item {
+  background: #fff; border-radius: 10px; margin-bottom: 10px;
+  border: 1px solid #e2e8f0; overflow: hidden; cursor: pointer;
+}
+.faq-q {
+  padding: 14px 18px; font-weight: 600; font-size: 0.875rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+}
+.faq-a {
+  display: none; padding: 0 18px 14px; font-size: 0.825rem;
+  color: #475569; line-height: 1.7; border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .arrow { transform: rotate(180deg); }
+.arrow { transition: transform 0.2s; flex-shrink: 0; }
+
+/* ── HIGHLIGHT STRIP ── */
+.highlight-strip {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+  border-radius: 12px; padding: 20px 24px; color: #fff; margin-bottom: 20px;
+}
+.highlight-strip h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+.highlight-strip p { font-size: 0.875rem; line-height: 1.7; opacity: 0.92; }
+
+/* ── STATUS BADGE ── */
+.badge {
+  display: inline-block; background: var(--teal); color: #fff;
+  font-size: 0.58rem; padding: 2px 8px; border-radius: 20px;
+  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+}
+
+/* ── BACK BUTTON ── */
+#back-btn {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  margin: 12px 20px 0;
+  width: fit-content;
+  transition: all 0.15s;
+}
+#back-btn:hover {
+  background: #f0fdfa;
+  border-color: var(--teal);
+  color: var(--teal);
+}
+#back-btn svg { flex-shrink: 0; }
+#back-btn.visible { display: inline-flex; }
+
+/* ── NO RESULTS ── */
+#no-results {
+  display: none; text-align: center; padding: 48px 20px; color: #94a3b8;
+}
+#no-results svg { width: 40px; height: 40px; margin: 0 auto 10px; opacity: 0.4; display: block; }
+
+/* ── FOOTER ── */
+#footer {
+  text-align: center; padding: 14px; font-size: 0.7rem;
+  color: #94a3b8; border-top: 1px solid #e2e8f0; background: #fff;
+  width: 100%;
+  margin-top: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <img src="data:image/jpeg;base64,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" alt="באים לטוב">
+  <div id="header-text">
+    <h1>מדריך רכז מחשוב יישובי <span class="badge">v2.1</span></h1>
+    <p>מערך "באים לטוב" | המשרד לשוויון חברתי</p>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<nav id="nav">
+  <div class="nav-group">
+    <button class="nav-tab active" onclick="showPage('intro',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      דף הבית
+    </button>
+    <button class="nav-tab" onclick="showPage('volunteers-about',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      מתנדבי באים לטוב
+    </button>
+    <button class="nav-tab" onclick="showPage('role',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      תפקיד הרכז
+    </button>
+    <button class="nav-tab" onclick="showPage('login',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      כניסה למערכת
+    </button>
+  </div>
+  <div class="nav-group">
+    <button class="nav-tab" onclick="showPage('dashboard',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      מסך ראשי
+    </button>
+    <button class="nav-tab" onclick="showPage('volunteers',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      רשימת מתנדבים
+    </button>
+    <button class="nav-tab" onclick="showPage('intake',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      קליטת מתנדב
+    </button>
+    <button class="nav-tab" onclick="showPage('assignment',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      שיבוץ לתוכניות
+    </button>
+    <button class="nav-tab" onclick="showPage('status',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      עדכון סטטוסים
+    </button>
+  </div>
+  <div class="nav-group">
+    <button class="nav-tab" onclick="showPage('reports',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      הפקת דוחות
+    </button>
+    <button class="nav-tab" onclick="showPage('excel',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      עבודה עם אקסל
+    </button>
+    <button class="nav-tab" onclick="showPage('programs',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+      תוכניות 2025
+    </button>
+  </div>
+  <div class="nav-group">
+    <button class="nav-tab" onclick="showPage('faq',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      שאלות נפוצות
+    </button>
+    <button class="nav-tab" onclick="showPage('contact',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 19.79 19.79 0 016.07 2.18 2 2 0 018 2h3a2 2 0 012 2 15.28 15.28 0 00.5 2.57 2 2 0 01-.45 2.11L12 9.91a16 16 0 006.29 6.29l1.17-1.05a2 2 0 012.11-.45 15.28 15.28 0 002.57.5A2 2 0 0122 16.92z"/></svg>
+      צור קשר
+    </button>
+    <button class="nav-tab" onclick="showPage('appendix',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      נספח — רכזים מחוזיים
+    </button>
+  </div>
+</nav>
+
+<!-- BACK BUTTON -->
+<button id="back-btn" onclick="goBack()">
+  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  חזור
+</button>
+
+<!-- CONTENT (all original pages preserved) -->
+
+<div id="content">
+
+    <div id="no-results">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="display:block;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <p style="font-weight:600;color:#475569;margin-bottom:6px;">לא נמצאו תוצאות</p>
+      <p style="font-size:0.85rem;">נסה מילות חיפוש אחרות</p>
+    </div>
+
+    <!-- PAGE: VOLUNTEERS-ABOUT -->
+    <div id="page-volunteers-about" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>כללי</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>מתנדבי באים לטוב</span>
+        </div>
+        <h2>מתנדבי באים לטוב</h2>
+        <p>ברוכים הבאים למערך הלאומי להתנדבות ותיקים</p>
+      </div>
+
+      <div class="highlight-strip" style="margin-bottom:28px;">
+        <h3>ברוכים הבאים!</h3>
+        <p>אנו מברכים אתכם על הצטרפותכם למערך הלאומי להתנדבות ותיקים, "באים לטוב", המופעל על ידי המשרד לשוויון חברתי באמצעות החברה למתנ"סים.</p>
+      </div>
+
+    
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px;">
+            <div class="icon-wrap" style="background:#f0fdfa;">
+              <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            למה אנחנו מתנדבים?
+          </div>
+          <p style="font-size:0.875rem;color:#475569;line-height:1.8;">מערך "באים לטוב" מאמין כי פעילות התנדבותית משמעותית תורמת לחברה לעצם מעצם השתתפותם בחיים הכלכליים, החברתיים, הקהילתיים והתרבותיים של החברה.</p>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="background:#f0fdfa;color:#0f766e;font-size:0.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">משמעות</span>
+            <span style="background:#f0fdfa;color:#0f766e;font-size:0.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">מעורבות</span>
+            <span style="background:#f0fdfa;color:#0f766e;font-size:0.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">שייכות</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px;">
+            <div class="icon-wrap" style="background:#fffbeb;">
+              <svg width="18" height="18" fill="none" stroke="var(--amber)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            מה מרוויח המתנדב?
+          </div>
+          <ul style="font-size:0.875rem;color:#475569;line-height:2.2;padding-right:16px;list-style:none;">
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--teal);font-weight:700;">✓</span> הגשמה עצמית והתפתחות אישית</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--teal);font-weight:700;">✓</span> בריאות ורווחה</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--teal);font-weight:700;">✓</span> שימוש במכישרונות וניסיונות</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--teal);font-weight:700;">✓</span> חיים פעילים, חיוביים ובריאים</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--teal);font-weight:700;">✓</span> קשרים חברתיים ותחושת שייכות</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:16px;">
+          <div class="icon-wrap" style="background:#eef2ff;">
+            <svg width="18" height="18" fill="none" stroke="#6366f1" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          המערך שלנו במספרים
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--teal);">מתנדבות ומתנדבים</div>
+            <div style="font-size:0.8rem;color:#64748b;margin-top:4px;">17000</div>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--amber);">רכזי פעילות</div>
+            <div style="font-size:0.8rem;color:#64748b;margin-top:4px;">300</div>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:#6366f1;">רשויות</div>
+            <div style="font-size:0.8rem;color:#64748b;margin-top:4px;">140</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#f0fdfa 0%,#e0f7f4 100%);border-radius:14px;padding:24px;border:1px solid #99f6e4;text-align:center;">
+        <div style="font-size:1.1rem;font-weight:700;color:#0f766e;margin-bottom:8px;">פעילות התנדבותית — חיים פעילים, חיוביים, בריאים</div>
+        <div style="display:flex;justify-content:center;gap:32px;margin-top:14px;">
+          <div style="font-size:0.875rem;font-weight:600;color:var(--teal);">משמעות</div>
+          <div style="color:#94a3b8;">•</div>
+          <div style="font-size:0.875rem;font-weight:600;color:var(--teal);">מעורבות</div>
+          <div style="color:#94a3b8;">•</div>
+          <div style="font-size:0.875rem;font-weight:600;color:var(--teal);">שייכות</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: ROLE -->
+    <div id="page-role" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>כללי</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>תפקיד הרכז</span>
+        </div>
+        <h2>תפקיד רכז/ת מחשוב במרכז הפעילות</h2>
+        <p>הגדרת התפקיד, תחומי האחריות והדרישות</p>
+      </div>
+
+      <div class="highlight-strip" style="margin-bottom:28px;">
+        <h3>מה הוא תפקיד רכז המחשוב?</h3>
+        <p>התפקיד נועד להוות את הזרוע הביצועית של תחום המחשוב בישוב או במתנ״ס — ניהול נתוני המתנדבים, תמיכה בשוטף, והפקת דוחות לגורמים הרלוונטיים.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:28px;">
+        <div class="card">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#f0fdfa;">
+              <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            ניהול נתונים ומערכות
+          </div>
+          <ul style="font-size:0.875rem;color:#475569;line-height:2;padding-right:16px;list-style:disc;">
+            <li>פיתוח מערך מעקב ובקרה ממוחשב של נתוני המתנדבים ביישובים</li>
+            <li>מעקב שוטף ועדכון סטטוס מתנדבים במערכת לניהול מתנדבים</li>
+            <li>מעקב על העברת נתוני המתנדבים למערכת המחשוב הארצית</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#fffbeb;">
+              <svg width="18" height="18" fill="none" stroke="var(--amber)" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            תמיכה ודיווח
+          </div>
+          <ul style="font-size:0.875rem;color:#475569;line-height:2;padding-right:16px;list-style:disc;">
+            <li>סיוע לרכז יישובי ברישום למערכת לניהול מתנדבים</li>
+            <li>הפקת דוחות על פי בקשה לרכז יישובי, רכזי תוכניות או מנהל מחוז</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#eef2ff;">
+              <svg width="18" height="18" fill="none" stroke="#6366f1" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18a19.79 19.79 0 013.07-3.07A2 2 0 018 2h3a2 2 0 012 2 15.28 15.28 0 00.5 2.57 2 2 0 01-.45 2.11L12 9.91a16 16 0 006.29 6.29l1.17-1.05a2 2 0 012.11-.45 15.28 15.28 0 002.57.5A2 2 0 0122 16.92z"/></svg>
+            </div>
+            קשר ותקשורת
+          </div>
+          <ul style="font-size:0.875rem;color:#475569;line-height:2;padding-right:16px;list-style:disc;">
+            <li>קיום פגישות תקופתיות עם רכזים ביישוב לקבלת נתונים שוטפים</li>
+            <li>קשר שוטף ושיתוף פעולה עם רכז מחשוב מחוזי ורכז יישובי או מתנ״סי</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#f0fdf4;">
+              <svg width="18" height="18" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            פיתוח מקצועי
+          </div>
+          <ul style="font-size:0.875rem;color:#475569;line-height:2;padding-right:16px;list-style:disc;">
+            <li>קבלת הכשרה על מערכת המחשוב של ״באים לטוב״</li>
+            <li>העשרה ולמידה בהתאם לצרכים ולדרישות התפקיד</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:14px;">
+          <div class="icon-wrap" style="background:#fef2f2;">
+            <svg width="18" height="18" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          דרישות התפקיד
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">ידע מקצועי</div>
+            <p style="font-size:0.85rem;color:#475569;line-height:1.6;">אוריינטציה לכלים ממוחשבים (עדיפות לניסיון בתחום) וידע בתוכנת אקסל</p>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">כישורים אישיים</div>
+            <p style="font-size:0.85rem;color:#475569;line-height:1.6;">יחסי אנוש טובים ויכולת תקשורתית גבוהה</p>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">למידה וזמינות</div>
+            <p style="font-size:0.85rem;color:#475569;line-height:1.6;">מוכנות ללמידה מתמדת, השתתפות במפגשי עדכון, וזמינות לעבודה שוטפת</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px;">
+          <div class="icon-wrap" style="background:#f0fdfa;">
+            <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          שותפי התפקיד
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;background:#f0fdfa;border-radius:8px;padding:10px 16px;">
+            <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span style="font-size:0.875rem;font-weight:500;color:#0f766e;">רכז מחשוב מחוזי</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:#f0fdfa;border-radius:8px;padding:10px 16px;">
+            <svg width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span style="font-size:0.875rem;font-weight:500;color:#0f766e;">רכז באים לטוב במרכז הפעילות</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: INTRO -->
+    <div id="page-intro" class="page active">
+      <div class="highlight-strip">
+        <h3>ברוכים הבאים למדריך רכז המחשוב היישובי</h3>
+        <p>מדריך זה ילווה אתכם בכל שלבי העבודה עם פורטל הרכזים של "באים לטוב" — ממסך הכניסה הראשוני ועד הפקת דוחות אקסל מקצועיים.</p>
+      </div>
+
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <div class="card" onclick="showPage('login', document.querySelector('[onclick*=login]'))" style="cursor:pointer;">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#f0fdfa;">
+              <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            כניסה למערכת
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">כיצד להתחבר לפורטל, שמירת סימניות ועוד.</p>
+        </div>
+        <div class="card" onclick="showPage('intake', document.querySelector('[onclick*=intake]'))" style="cursor:pointer;">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#fffbeb;">
+              <svg width="18" height="18" fill="none" stroke="var(--amber)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </div>
+            קליטת מתנדב חדש
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">תהליך קליטה שלב-אחר-שלב כולל ריאיון ושיבוץ.</p>
+        </div>
+        <div class="card" onclick="showPage('reports', document.querySelector('[onclick*=reports]'))" style="cursor:pointer;">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#eef2ff;">
+              <svg width="18" height="18" fill="none" stroke="#6366f1" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            הפקת דוחות
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">דוח מתנדבים, דוח שיבוצים וייצוא לאקסל.</p>
+        </div>
+        <div class="card" onclick="showPage('faq', document.querySelector('[onclick*=faq]'))" style="cursor:pointer;">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#fef2f2;">
+              <svg width="18" height="18" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            שאלות נפוצות
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">פתרונות לבעיות נפוצות ותשובות לשאלות שכיחות.</p>
+        </div>
+        <div class="card" onclick="showPage('programs', document.querySelector('[onclick*=programs]'))" style="cursor:pointer;">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#f0fdf4;">
+              <svg width="18" height="18" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+            </div>
+            תוכניות ארציות 2025
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">רשימת כל התוכניות הפעילות ותיאור קצר של כל אחת.</p>
+        </div>
+        <div class="card" onclick="showPage('appendix',this)" style="cursor:pointer;border:2px solid var(--teal);">
+          <div class="card-title">
+            <div class="icon-wrap" style="background:#f0fdfa;">
+              <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            נספח — רכזי מחשוב מחוזיים
+          </div>
+          <p style="font-size:0.875rem;color:#64748b;line-height:1.6;">פרטי קשר של כל רכזי המחשוב המחוזיים והארציים.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: LOGIN -->
+    <div id="page-login" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>כללי</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>כניסה למערכת</span>
+        </div>
+        <h2>כניסה למערכת ושמירת קישור</h2>
+        <p>כל מה שצריך לדעת כדי להתחבר לפורטל הרכזים ולשמור אותו כסימנייה נוחה בדפדפן.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:#f0fdfa;">
+            <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          התחברות לפורטל
+        </div>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-content">
+              <h4>פתיחת הקישור</h4>
+              <p>עם הגדרתכם במערכת, תקבלו קישור ייעודי לפורטל הרכזים. לחצו על הקישור כדי להגיע למסך ההתחברות.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>הזנת שם משתמש</h4>
+              <p>הקלידו את <strong>כתובת המייל המקצועית</strong> שלכם בשדה שם המשתמש.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>קבלת קוד SMS</h4>
+              <p>המערכת תשלח קוד אימות לטלפון הנייד שלכם. המתינו להודעת הטקסט.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>הזנת הסיסמה</h4>
+              <p>הציבו את הסמן על <strong>השורה המקווקוות</strong> בתיבת הסיסמה והקלידו את הקוד שהתקבל. לחצו "התחבר".</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:#fffbeb;">
+            <svg width="18" height="18" fill="none" stroke="var(--amber)" stroke-width="2" viewBox="0 0 24 24"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          </div>
+          שמירת הקישור כסימנייה
+        </div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:16px;line-height:1.7;">חוסכת זמן — תאפשר לכם להגיע ישר לפורטל בלחיצה אחת מהדפדפן:</p>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-content">
+              <h4>היכנסו לאתר הפורטל</h4>
+              <p>ודאו שכתובת הפורטל מופיעה בשורת הכתובות של הדפדפן.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>לחצו על סמל הכוכב ★</h4>
+              <p>בסוף שורת הכתובת (מצד שמאל בכרום) יש כוכב — לחצו עליו.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>שמו שם ברור</h4>
+              <p>בחלון שנפתח, כתבו שם כגון: <strong>"פורטל רכזים - באים לטוב"</strong></p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>בחרו "סרגל סימניות" ולחצו "בוצע"</h4>
+              <p>הקישור יופיע בסרגל הסימניות העליון לגישה מיידית בכל כניסה לדפדפן.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: DASHBOARD -->
+    <div id="page-dashboard" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>ניהול מתנדבים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>מסך ראשי</span>
+        </div>
+        <h2>מסך ראשי</h2>
+        <p>סקירה של הגרפים, הנתונים והניווט הראשי בפורטל.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:#f0fdfa;">
+            <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          שלושת הגרפים הראשיים
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>גרף</th><th>מה הוא מציג?</th><th>לאיזה שימוש?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>פונים לפי סטטוס</strong></td>
+              <td>חלוקה בין חדש / פעיל / לא פעיל</td>
+              <td>מבט מהיר על בריאות הפעילות</td>
+            </tr>
+            <tr>
+              <td><strong>פניות לא מטופלות מעל 7 ימים</strong></td>
+              <td>מספר פניות שממתינות לטיפול ראשוני</td>
+              <td>התראה קריטית — מחייב טיפול מיידי</td>
+            </tr>
+            <tr>
+              <td><strong>פונים לפי ישוב</strong></td>
+              <td>פילוח גיאוגרפי של המתנדבים</td>
+              <td>חיוני במיוחד לרכזים אזוריים</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="info-box tip" style="margin-top:16px;">
+          <strong>💡 טיפ שימושי</strong>
+          העבירו את הסמן מעל פלח בגרף — יופיע המספר המדויק של המתנדבים בקטגוריה זו.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">ניווט במסך הראשי</div>
+        <p style="font-size:0.875rem;color:#64748b;line-height:1.7;">בחלק התחתון של המסך תופיע <strong>רשימת המתנדבים</strong>. ניתן לסנן לפי סטטוס בלחיצה על: <span class="tag tag-green">חדש</span> <span class="tag tag-blue">פעיל</span> <span class="tag tag-amber">לא פעיל</span>. לחיצה על <strong>"צפייה בתיק מתנדב"</strong> תעביר למסך הקליטה המלא.</p>
+      </div>
+    </div>
+
+    <!-- PAGE: VOLUNTEERS -->
+    <div id="page-volunteers" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>ניהול מתנדבים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>רשימת מתנדבים</span>
+        </div>
+        <h2>איתור ומיון מתנדבים</h2>
+        <p>כיצד למצוא מתנדב, למיין לפי תאריך ולסנן לפי סטטוס.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">חיפוש ומיון מהיר</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>מה רוצים למצוא?</th><th>כיצד עושים זאת?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>מתנדב לפי שם</td><td>הקלידו שם (חלקי — פרטי בלבד / משפחה בלבד) בעמודת "שם מלא"</td></tr>
+            <tr><td>חיפוש לפי ת.ז. או טלפון</td><td>הקלידו את המספר בעמודות "תעודת זהות" / "מס' טלפון נייד"</td></tr>
+            <tr><td>מיון לפי תאריך פנייה</td><td>לחצו על כותרת "תאריך פנייה אחרונה" — לחיצה שנייה הופכת את הסדר</td></tr>
+            <tr><td>פילוח לפי סטטוס</td><td>לחצו על <strong>חדש / פעיל / לא פעיל</strong> מעל הרשימה</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAGE: INTAKE -->
+    <div id="page-intake" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>ניהול מתנדבים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>קליטת מתנדב חדש</span>
+        </div>
+        <h2>תהליך קליטת מתנדב חדש</h2>
+        <p>מטופס בקשת ההתנדבות ועד שמירת הריאיון ומעבר לשיבוץ — שלב אחר שלב.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:#f0fdfa;"><svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          מסך קליטה — פרטי מתנדב
+        </div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;line-height:1.7;">לחצו "צפייה בתיק מתנדב" מרשימת המתנדבים. הפרטים שהמתנדב מילא בטופס יופיעו בחלק העליון.</p>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;font-weight:600;">במסך הקליטה ניתן לעדכן:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <span class="tag tag-blue">כתובת מגורים</span>
+          <span class="tag tag-blue">כתובת מייל</span>
+          <span class="tag tag-blue">טלפון נייד</span>
+          <span class="tag tag-blue">תאריך לידה</span>
+          <span class="tag tag-green">כישורים</span>
+          <span class="tag tag-green">ניסיון תעסוקתי</span>
+          <span class="tag tag-green">שפות</span>
+        </div>
+        <div class="info-box warning">
+          <strong>⚠️ חשוב!</strong>
+          לאחר כל עדכון פרטים יש ללחוץ "שמירת שינויים". אחרת השינויים לא יישמרו.
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:#fffbeb;"><svg width="18" height="18" fill="none" stroke="var(--amber)" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+          ביצוע ותיעוד הריאיון
+        </div>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-content">
+              <h4>תעדו את תאריך הריאיון</h4>
+              <p>לחצו על תיבת התאריך והזינו את יום קיום הריאיון.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>כתבו סיכום ריאיון</h4>
+              <p>פרטו את עיקרי השיחה, תחומי עניין, ניסיון רלוונטי והתרשמות כללית.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>לחצו "שמירת הריאיון ומעבר לשיבוץ"</h4>
+              <p>המערכת תעביר אתכם אוטומטית למסך השיבוצים.</p>
+            </div>
+          </div>
+        </div>
+        <div class="info-box info">
+          <strong>📌 לידיעה</strong>
+          לא ניתן לעבור למסך השיבוצים מבלי למלא תאריך ריאיון וסיכום תוכן.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">העברת מתנדב לישוב אחר</div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;line-height:1.7;">אם המתנדב מבקש להתנדב בישוב / מתנ"ס שונה ממה שמילא בטופס:</p>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-content">
+              <h4>גשו לפרטי בקשת ההתנדבות</h4>
+              <p>בחלק התחתון של מסך הקליטה מתחת לפרטים האישיים.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>לחצו על זכוכית המגדלת</h4>
+              <p>ליד שדה "ישוב מבוקש להתנדבות" ובחרו את היעד החדש.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-content">
+              <h4>לחצו "שמירת שינויים"</h4>
+              <p>המתנדב ייגרע מרשימתכם ויופיע ברכז ביישוב החדש.</p>
+            </div>
+          </div>
+        </div>
+        <div class="info-box warning">
+          <strong>⚠️ שימו לב!</strong>
+          ברגע שינוי מיקום ההתנדבות — המתנדב נעלם מהרשימה שלכם לאלתר. ודאו שסיימתם את כל התיעוד לפני ביצוע ההעברה.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: ASSIGNMENT -->
+    <div id="page-assignment" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>ניהול מתנדבים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>שיבוץ לתוכניות</span>
+        </div>
+        <h2>שיבוץ מתנדבים לתוכניות</h2>
+        <p>כיצד לשבץ מתנדב לתוכנית קיימת, ליצור תוכנית חדשה ולנהל שיבוצים קיימים.</p>
+      </div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">הקמת שיבוץ חדש</div>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>בחרו תוכנית התנדבות</h4><p>לחצו על שדה תוכנית ההתנדבות וכתבו את שם התוכנית — תופיע רשימה. ניתן גם ללחוץ על זכוכית המגדלת לקבלת הרשימה המלאה.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>מלאו סוג פעילות ומיקום</h4><p>לאחר בחירת תוכנית, סוג הפעילות ימולא אוטומטית. אם מיקום ההתנדבות לא מולא — בחרו אותו מהרשימה.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>תפקיד ניהולי (אם רלוונטי)</h4><p>בחרו מתוך: <span class="tag tag-blue">רכז התיישבות</span> <span class="tag tag-green">רכז תוכנית</span> <span class="tag tag-amber">מנהל ארצי</span></p></div></div>
+          <div class="step-item"><div class="step-content"><h4>הוסיפו הערות ושמרו</h4><p>ניתן להוסיף הערות חופשיות בשדה ההערות. לחצו "שמירה" בסיום.</p></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">יצירת תוכנית חדשה</div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;line-height:1.7;">אם התוכנית הרצויה לא מופיעה ברשימה — לחצו על <strong>"תוכנית לא מופיעה ברשימה? לחצ/י כאן"</strong>. בחלון שנפתח:</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>הקלידו שם תוכנית</h4><p>שם ברור ומזהה לתוכנית החדשה.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>שייכו לקשר לפעילות</h4><p>בחרו מתוך הגלילה הנפתחת את סוג הפעילות המתאים.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו "שמירה"</h4><p>התוכנית החדשה תיווצר ותהיה זמינה לשיבוץ.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: STATUS -->
+    <div id="page-status" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>ניהול מתנדבים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>עדכון סטטוסים</span>
+        </div>
+        <h2>ניהול סטטוסי מתנדבים</h2>
+        <p>מדריך לסוגי הסטטוסים השונים ומתי להשתמש בכל אחד מהם.</p>
+      </div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">סוגי הסטטוסים</div>
+        <table class="data-table">
+          <thead><tr><th>סטטוס</th><th>מתי משתמשים?</th><th>הערה</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-blue">חדש</span></td><td>מתנדב שעדיין לא שובץ לתוכנית</td><td>לא רלוונטי אם המתנדב כבר משובץ</td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-green">פעיל</span></td><td>מתנדב שחזר מסטטוס לא פעיל ומעוניין לפעול שוב</td><td>נקבע <strong>אוטומטית</strong> עם שיבוץ לפעילות</td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-amber">לא פעיל</span></td><td>הפסיק להתנדב, או נרשם ובריאיון הובהר שאינו מעוניין</td><td>—</td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-red">לא מתאים</span></td><td>אינו עומד בקריטריונים (לדוגמה: מתחת לגיל 55)</td><td>—</td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-blue">בהמתנה</span></td><td>לא נמצא שיבוץ מתאים, או עיכוב טכני / אישי</td><td>זמני</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">העברה מרוכזת של מתנדבים</div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;line-height:1.7;">כדי להעביר קבוצת מתנדבים בסטטוס <strong>חדש</strong> בבת אחת:</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>לחצו "העברת מתנדבים"</h4><p>בחלק העליון של המסך הראשי.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>סמנו את המתנדבים הרצויים</h4><p>לחצו על הריבוע לצד כל שם — יהפוך לאפור עם ✓.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>בחרו מתנ"ס יעד</h4><p>הזינו את שם המתנ"ס אליו ברצונכם להעביר.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו "בצע"</h4><p>המתנדבים יגרעו מרשימתכם ויועברו ליעד.</p></div></div>
+        </div>
+        <div class="info-box info">
+          <strong>📌 לידיעה</strong>
+          ניתן להעביר מתנדבים פעילים רק דרך מסך הקליטה האישי שלהם, לא דרך ההעברה המרוכזת.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: REPORTS -->
+    <div id="page-reports" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>דוחות ונתונים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>הפקת דוחות</span>
+        </div>
+        <h2>הפקת דוחות</h2>
+        <p>כיצד להפיק דוח מתנדבים, דוח שיבוצים וייצוא לאקסל.</p>
+      </div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">סוגי הדוחות</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="border:1px solid #e2e8f0;border-radius:10px;padding:20px;">
+            <div style="font-weight:700;color:#0f172a;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+              <span class="tag tag-blue">דוח מתנדבים</span>
+            </div>
+            <p style="font-size:0.8rem;color:#64748b;line-height:1.6;">שם פרטי, שם משפחה, ת"ז, טלפון, מייל, גיל, סטטוס, תאריך פנייה אחרונה.</p>
+          </div>
+          <div style="border:1px solid #e2e8f0;border-radius:10px;padding:20px;">
+            <div style="font-weight:700;color:#0f172a;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+              <span class="tag tag-green">דוח שיבוצים</span>
+            </div>
+            <p style="font-size:0.8rem;color:#64748b;line-height:1.6;">שם מתנדב, מסלול, סוג פעילות, תוכנית, מיקום, תאריך שיבוץ, ארגון, הערות.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">שלבי הפקת דוח</div>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>לחצו "דוחות" בסרגל הראשי</h4><p>בחלק העליון של מסך הפורטל.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>בחרו סוג דוח</h4><p>לחצו על "דוח מתנדבים" או "דוח שיבוצים".</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>הגדירו טווח תאריכים</h4><p>ברירת המחדל: מתחילת התוכנית עד היום. ניתן לשנות.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו "הפקת דוח"</h4><p>הדוח יוצג בתצוגה מקדימה עם אפשרות למיון ולייצוא.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו "יצוא לאקסל"</h4><p>הדוח יורד כקובץ XLSX המוכן לעריכה.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: EXCEL -->
+    <div id="page-excel" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>דוחות ונתונים</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>עבודה עם אקסל</span>
+        </div>
+        <h2>עבודה על דוחות האקסל</h2>
+        <p>טיפים לעיצוב, מיון וסינון של קבצי האקסל שיוצאו מהפורטל.</p>
+      </div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">ניקוי ועיצוב הדוח</div>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>מחיקת עמודה A</h4><p>לאחר ייצוא: לחצו על האות <strong>A</strong> בראש העמודה → העמודה תיצבע באפור → קליק ימני → <strong>מחק</strong>.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>הוספת גבולות לטבלה</h4><p>סמנו את כל הטבלה (גררו עם העכבר) → לכו ל<strong>בית</strong> → פתחו תפריט גבולות → בחרו <strong>"כל הגבולות"</strong>.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>התאמת רוחב עמודות</h4><p>לכו ל<strong>בית</strong> → <strong>עיצוב</strong> → <strong>"התאם אוטומטית לרוחב עמודה"</strong> — כל הטקסט יוצג במלואו.</p></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">מיון וסינון</div>
+        <div class="info-box warning">
+          <strong>⚠️ חשוב ביותר!</strong>
+          לפני כל מיון — <strong>סמנו את כל הטבלה</strong> (גרירה עם העכבר). מיון ללא סימון הכל עלול לשבש את הנתונים!
+        </div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:14px;font-weight:600;margin-top:14px;">מיון לפי עמוד:</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>סמנו את כל הטבלה</h4><p>החזיקו ולחצו על העכבר וגררו על כל הנתונים.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לכו ל"נתונים" ← "מיין"</h4><p>בסרגל הכלים העליון.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>בחרו עמודה וסדר</h4><p>לדוגמה: שם משפחה מ-א' עד ת'. ודאו שמסמנים "הנתונים שלי כוללים כותרת".</p></div></div>
+        </div>
+        <p style="font-size:0.875rem;color:#64748b;margin-bottom:10px;font-weight:600;margin-top:16px;">סינון לפי ערך (דוגמה — לראות רק בני 75):</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-content"><h4>לכו ל"נתונים" ← "סינון"</h4><p>חצים יופיעו בכל כותרת עמודה.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו על חץ עמודת הגיל</h4><p>הורידו את הסימון מ"בחר הכל" ובחרו <strong>75</strong>.</p></div></div>
+          <div class="step-item"><div class="step-content"><h4>לחצו "אישור"</h4><p>הרשימה תציג רק מתנדבים בני 75. לחיצה שוב על "סינון" מבטלת את הסינון.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: FAQ -->
+    <div id="page-faq" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>עזרה</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>שאלות נפוצות</span>
+        </div>
+        <h2>שאלות ותשובות נפוצות</h2>
+        <p>פתרונות לבעיות הנפוצות ביותר שרכזים נתקלים בהן בעבודה עם הפורטל.</p>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">גיליתי בריאיון שהמתנדב רוצה להתנדב בישוב אחר. איך משנים? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">במסך הקליטה, תחת פרטי בקשת ההתנדבות → שדה "ישוב מבוקש להתנדבות" → לחצו על זכוכית המגדלת → בחרו את הישוב המתאים → לחצו "שמירת שינויים". המתנדב יעבור אוטומטית לרכז בישוב החדש ויגרע מרשימתכם.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">בדוח מתנדבים אני רואה מתנדב שרשום פעמיים לאותה תוכנית. מה עושים? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">היכנסו לתיק המתנדב → מסך שיבוצים → תחתית המסך "שיבוצים קיימים" → מצאו את השורה הכפולה → שנו את הסטטוס ל<strong>לא פעיל</strong> ע"י לחיצה על העיפרון.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">מתנדב מילא טופס בקשה אבל לא מופיע אצלי בפורטל. מדוע? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">מתנדב מופיע אצלכם רק אם מילא את <strong>הישוב שלכם</strong> בשדה "ישוב מבוקש להתנדבות". אם הוא לא מופיע — פנו לרכז המחשוב המחוזי לאיתור המתנדב ולהעברתו.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">אני צריך לגלול הרבה בחיפוש תוכנית בזכוכית המגדלת. יש דרך מהירה יותר? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">אין צורך ללחוץ על זכוכית המגדלת בכלל. <strong>כתבו ישירות על הקו</strong> שמופיע לפני זכוכית המגדלת — תוכניות התואמות יופיעו מיידית מתוך הרשימה.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">שיבצתי מתנדב ואני רוצה לחזור למסך הראשי. איך? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">בכל שלב ניתן ללחוץ על <strong>"ניהול מתנדבים"</strong> בסרגל הניווט העליון. הפעולה תחזיר אתכם ישירות למסך הראשי.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">ניסיתי לשנות מספר ת"ז של מתנדב במסך הקליטה ולא הצלחתי. מדוע? <svg class="arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">מסך הקליטה לא מאפשר עדכון ת"ז, שם ומגדר. לשינויים אלה — גשו למסך <strong>פרטי מתנדב</strong> דרך תפריט הניווט. בסיום לחצו "עדכון פרטים".</div>
+      </div>
+    </div>
+
+    <!-- PAGE: CONTACT -->
+    <div id="page-contact" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>עזרה</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>צור קשר</span>
+        </div>
+        <h2>צור קשר ותמיכה</h2>
+        <p>לכל שאלה טכנית, תקלה או בקשת הדרכה נוספת — אנחנו כאן.</p>
+      </div>
+      <div class="card" style="max-width:480px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px;background:#f0fdfa;border-radius:12px;margin-bottom:20px;">
+          <div style="width:52px;height:52px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:700;color:#0f172a;">ענת קנטור</div>
+            <div style="font-size:0.8rem;color:#0d9488;">מנהלת תחום מחשוב — באים לטוב</div>
+          </div>
+        </div>
+        <p style="font-size:0.875rem;color:#64748b;line-height:1.7;">בכל שאלה טכנית, תקלה במערכת, או צורך בהדרכה נוספת — אל תהססו לפנות ישירות לענת. היא אחראית על כל ההיבטים הטכנולוגיים של פורטל הרכזים.</p>
+        <div class="info-box tip" style="margin-top:16px;">
+          <strong>💡 לפני הפנייה — בדקו:</strong>
+          האם הנושא מוסבר במדריך זה? השתמשו בחיפוש (בסרגל העליון) כדי למצוא את הנושא הרלוונטי.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: PROGRAMS -->
+    <div id="page-programs" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>תוכניות ארציות</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>תוכניות 2025</span>
+        </div>
+        <h2>תוכניות ארציות — באים לטוב 2025</h2>
+        <p>רשימת כל התוכניות הארציות הפועלות במסגרת המערך הלאומי להתנדבות ותיקים, ותיאור קצר של כל אחת מהן.</p>
+      </div>
+
+      <!-- Education programs -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:4px;height:24px;background:var(--teal);border-radius:2px;"></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;">תוכניות חינוך</h3>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#fef3c7;">
+                <svg width="18" height="18" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              התנדבות במערכת החינוך
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">מסגרת המאפשרת לאזרחים ותיקים לפעול כמתנדבים במערכת החינוך — שילוב שיעורי העשרה והעצמה חינוכית. המתנדבים עוברים הכשרה מותאמת לפני שנעשים חלק ממערכת החינוך.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">חינוך</span> <span class="tag tag-green">ביה"ס</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#d1fae5;">
+                <svg width="18" height="18" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              חינוך בגני ילדים
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">זהב בגן — מפגשים משמעותיים של גמלאים בקהילה עם ילדי הגן. המתנדב פועל בגן ילדים לשבוע, מעביר תוכן מפגש ומלווה את הגן. הפעילות מתבצעת בקבוצות או אישית.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">חינוך</span> <span class="tag tag-amber">גן ילדים</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#dbeafe;">
+                <svg width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+              </div>
+              חינוך בבתי ספר
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">קריאה בהנאה — תכנית שביסודה התפיסה שקריאת ספרים חשובה לבניית עולמו הרוחני והתרבותי של הילד. עד 8 תלמידים בקבוצה, עד 3 תלמידים לפגישה. תמיכה לימודית, חברתית ורגשית.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">חינוך</span> <span class="tag tag-green">ביה"ס</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#ede9fe;">
+                <svg width="18" height="18" fill="none" stroke="#7c3aed" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              אוריינות דיגיטלית
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">מחוברים לגיל הזהב — הנגשת השימוש בטלפון החכם לבני הגיל השלישי. 8–10 סדנאות לאזרחים ותיקים, מדריכים קורסים הכוללים 8–10 נערכים, ובימי חירום נערכים כל הקורסים על ידי המתנדבים.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">טכנולוגיה</span> <span class="tag tag-amber">ותיקים</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Social programs -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:4px;height:24px;background:#6366f1;border-radius:2px;"></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;">תוכניות קהילה ורווחה</h3>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#fce7f3;">
+                <svg width="18" height="18" fill="none" stroke="#db2777" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </div>
+              חבר בלב של"מ
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">תוכנית התנדבות התומכת באזרחים ותיקים בודדים. מתנדבים יוצרים קשר טלפוני קבוע עם אזרחים, מבצעים שיחות תמיכה מותנות, נותנים מענה לצרכים החברתיים ומסייעים לאחרים להגיע לאזרחות.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">רווחה</span> <span class="tag tag-green">בדידות</span></div>
+          </div>
+
+         
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#fef3c7;">
+                <svg width="18" height="18" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              </div>
+              חינוך מבוגרים 
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">שיחון בעברית — תכנית שמחברת בין מתנדבים ותיקים ועולים מבוגרים שאינם דוברי עברית. הדגש הוא בשיחה מדוברת ותמיכה בעברית. מתנדבי התכנית מקבלים ליווי ותמיכה.</p>
+            <div style="margin-top:12px;"><span class="tag tag-blue">חינוך</span> <span class="tag tag-green">עולים</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#fee2e2;">
+                <svg width="18" height="18" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              יזמות חברתית
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">מסע היזם — הכשרת יזמים חברתיים בקהילה, על ידי מנחי קבוצות מתנדבים. ההכשרה כוללת קורסים ופעילויות המקדמות את היזם לביצוע. המנחים עוברים הכשרה ברמה מוחזית / ארצית.</p>
+            <div style="margin-top:12px;"><span class="tag tag-amber">יזמות</span> <span class="tag tag-green">קהילה</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Military / Security programs -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:4px;height:24px;background:#f59e0b;border-radius:2px;"></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;">תוכניות ביטחון וסיוע</h3>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#fef3c7;">
+                <svg width="18" height="18" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              סיוע לחיילים
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">תעסוחיל — מתנדבי התוכנית מסייעים לחיילים לקבל אישור לעבודה במהלך הצבאי. המתנדבים משוחררים יוצרים חיבורים, מסייעים לחיילים בתחומים שונים, ולאחר השחרור גם מלמדים אותם מיומנויות חיים.</p>
+            <div style="margin-top:12px;"><span class="tag tag-red">ביטחון</span> <span class="tag tag-blue">חיילים</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon-wrap" style="background:#d1fae5;">
+                <svg width="18" height="18" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              פנאי וטיולים — "קהילה מטיילת"
+            </div>
+            <p style="font-size:0.85rem;color:#64748b;line-height:1.7;">רשת ארצית של מועדוני מטיילים, מבוגרים מבוגרים בקהילה, המופעלים על ידי רכזים מתנדבים. כל מתנדב נדרש להכשרה בסיסית ויוזמות ניהול. ההכשרה המקצועית מסייעת למתנדבים לארגן טיולים.</p>
+            <div style="margin-top:12px;"><span class="tag tag-green">פנאי</span> <span class="tag tag-blue">טיולים</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Summary info box -->
+      <div class="info-box tip">
+        <strong>📋 כיצד לשבץ מתנדב לתוכנית?</strong>
+        עברו למסך <strong>שיבוץ לתוכניות</strong> ובחרו את שם התוכנית הרצויה מהרשימה. אם תוכנית אינה מופיעה — ניתן ליצור תוכנית חדשה דרך "תוכנית לא מופיעה ברשימה? לחצ/י כאן".
+      </div>
+    </div>
+
+
+    <!-- PAGE: APPENDIX -->
+    <div id="page-appendix" class="page">
+      <div class="page-header">
+        <div class="breadcrumb">
+          <span>נספח</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>רכזי מחשוב מחוזיים</span>
+        </div>
+        <h2>נספח — רכזי מחשוב מחוזיים</h2>
+        <p>רשימת רכזי המחשוב המחוזיים ופרטי הקשר שלהם לצורך תיאום ושיתוף פעולה שוטף.</p>
+      </div>
+
+      <div class="highlight-strip" style="margin-bottom:24px;">
+        <h3>לשיתוף פעולה ותמיכה מחוזית</h3>
+        <p>רכזי המחשוב המחוזיים הם גורמי הקשר הישירים שלכם לכל שאלה מקצועית, תקלה טכנית או צורך בהדרכה נוספת.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:16px;">
+          <div class="icon-wrap" style="background:#f0fdfa;">
+            <svg width="18" height="18" fill="none" stroke="var(--teal)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          רכזת מחשוב ארצית
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;background:#f0fdfa;border-radius:12px;padding:20px;">
+          <div style="width:52px;height:52px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:800;color:#0f172a;font-size:1rem;">איילה שקד</div>
+            <div style="font-size:0.8rem;color:#0d9488;margin-top:2px;">רכזת מחשוב ארצית — באים לטוב</div>
+            <div style="display:flex;gap:20px;margin-top:10px;flex-wrap:wrap;">
+              <span style="display:flex;align-items:center;gap:6px;font-size:0.85rem;color:#0f766e;font-weight:600;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 19.79 19.79 0 016.07 2.18 2 2 0 018 2h3a2 2 0 012 2 15.28 15.28 0 00.5 2.57 2 2 0 01-.45 2.11L12 9.91a16 16 0 006.29 6.29l1.17-1.05a2 2 0 012.11-.45 15.28 15.28 0 002.57.5A2 2 0 0122 16.92z"/></svg>
+                050-8580767
+              </span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:0.85rem;color:#0f766e;font-weight:600;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                ayalas@matnasim.org.il
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px;">
+          <div class="icon-wrap" style="background:#eef2ff;">
+            <svg width="18" height="18" fill="none" stroke="#6366f1" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          רכזי מחשוב מחוזיים
+        </div>
+        <table class="data-table" style="width:100%;table-layout:fixed;">
+          <colgroup>
+            <col style="width:14%">
+            <col style="width:9%">
+            <col style="width:11%">
+            <col style="width:12%">
+            <col style="width:54%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th style="padding:6px 4px;">מחוז</th>
+              <th style="padding:6px 4px;">שם פרטי</th>
+              <th style="padding:6px 4px;">שם משפחה</th>
+              <th style="padding:6px 4px;">טלפון</th>
+              <th style="padding:6px 4px;">כתובת מייל</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-blue">צפון</span></td><td style="padding:6px 4px;">ראובן</td><td style="padding:6px 4px;">וגנר</td><td style="padding:6px 4px;">050-9070280</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:eng.reuven.wagner@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">eng.reuven.wagner@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-green">חיפה והעמקים</span></td><td style="padding:6px 4px;">כרמלה</td><td style="padding:6px 4px;">שלו</td><td style="padding:6px 4px;">054-5604720</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:bafe123@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">bafe123@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-amber">מרכז-צפוני</span></td><td style="padding:6px 4px;">אריה</td><td style="padding:6px 4px;">אפרמן</td><td style="padding:6px 4px;">050-8884732</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:araperman@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">araperman@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-amber">מרכז-צפוני</span></td><td style="padding:6px 4px;">ירון</td><td style="padding:6px 4px;">גולדמן</td><td style="padding:6px 4px;">054-4225407</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:yaron.goldman.lions@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">yaron.goldman.lions@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-amber">מרכז-צפוני</span></td><td style="padding:6px 4px;">בני</td><td style="padding:6px 4px;">הרשקוביץ</td><td style="padding:6px 4px;">052-8150037</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:hershkow@netvision.net.il" style="color:var(--teal);text-decoration:none;font-weight:600;">hershkow@netvision.net.il</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-blue">מרכז-דרומי</span></td><td style="padding:6px 4px;">חיים</td><td style="padding:6px 4px;">פומרנץ</td><td style="padding:6px 4px;">050-3337835</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:hpomerantz@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">hpomerantz@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-green">ירושלים</span></td><td style="padding:6px 4px;">אמנון</td><td style="padding:6px 4px;">כהן</td><td style="padding:6px 4px;">054-5631972</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:amnon@matnasetzion.com" style="color:var(--teal);text-decoration:none;font-weight:600;">amnon@matnasetzion.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-red">דרום</span></td><td style="padding:6px 4px;">משה</td><td style="padding:6px 4px;">ויטל</td><td style="padding:6px 4px;">054-5482003</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:myvital1@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">myvital1@gmail.com</a></td></tr>
+            <tr><td style="padding:6px 4px;"><span class="tag tag-red">דרום</span></td><td style="padding:6px 4px;">דני</td><td style="padding:6px 4px;">פליס</td><td style="padding:6px 4px;">052-5013682</td><td style="font-size:0.78rem;direction:ltr;text-align:left;padding:6px 0 6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="mailto:danyplis@gmail.com" style="color:var(--teal);text-decoration:none;font-weight:600;">danyplis@gmail.com</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="footer">
+  גרסה 2.1 | עודכן ינואר 2025 &nbsp;|&nbsp; ענת קנטור — מנהלת תחום מחשוב
+</div>
+
+<script>
+// ── Navigation history for back button ──
+const pageHistory = [];
+const HOME_PAGE = 'intro';
+
+function showPage(id, el) {
+  // Track history
+  const current = document.querySelector('.page.active');
+  if (current && current.id !== 'page-' + id) {
+    pageHistory.push(current.id.replace('page-', ''));
+  }
+  updateBackBtn();
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else {
+    // highlight matching tab
+    document.querySelectorAll('.nav-tab').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+        n.classList.add('active');
+      }
+    });
+  }
+  document.getElementById('searchInput').value = '';
+  document.getElementById('no-results').style.display = 'none';
+  window.scrollTo(0, 0);
+  setTimeout(sendHeight, 150);
+}
+
+function goBack() {
+  if (pageHistory.length === 0) return;
+  const prevId = pageHistory.pop();
+  updateBackBtn();
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + prevId);
+  if (page) page.classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(n => {
+    n.classList.remove('active');
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + prevId + "'")) {
+      n.classList.add('active');
+    }
+  });
+  window.scrollTo(0, 0);
+  setTimeout(sendHeight, 150);
+}
+
+function updateBackBtn() {
+  const btn = document.getElementById('back-btn');
+  if (pageHistory.length > 0) {
+    btn.classList.add('visible');
+    const prevId = pageHistory[pageHistory.length - 1];
+    const prevTab = Array.from(document.querySelectorAll('.nav-tab')).find(n =>
+      n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + prevId + "'")
+    );
+    const label = prevTab ? prevTab.innerText.trim() : 'חזור';
+    btn.innerHTML = `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> ${label}`;
+  } else {
+    btn.classList.remove('visible');
+  }
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+function doSearch(q) {
+  q = q.trim().toLowerCase();
+  if (!q) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const activeTab = document.querySelector('.nav-tab.active');
+    if (activeTab) {
+      const match = activeTab.getAttribute('onclick').match(/showPage\('([^']+)'/);
+      if (match) {
+        const page = document.getElementById('page-' + match[1]);
+        if (page) page.classList.add('active');
+      }
+    }
+    document.getElementById('no-results').style.display = 'none';
+    return;
+  }
+  const pages = document.querySelectorAll('.page');
+  let found = false;
+  pages.forEach(page => {
+    const text = page.innerText.toLowerCase();
+    if (text.includes(q)) { page.classList.add('active'); found = true; }
+    else { page.classList.remove('active'); }
+  });
+  document.getElementById('no-results').style.display = found ? 'none' : 'block';
+}
+
+// Show intro page on load
+document.addEventListener('DOMContentLoaded', function() {
+  const intro = document.getElementById('page-intro');
+  if (intro) intro.classList.add('active');
+  sendHeight();
+});
+
+// ── Google Sites iframe height fix ──
+function sendHeight() {
+  const h = document.documentElement.scrollHeight;
+  try { window.parent.postMessage({ type: 'resize', height: h }, '*'); } catch(e) {}
+  if (window.gadgets && gadgets.window) { gadgets.window.adjustHeight(h); }
+}
+const resizeObserver = new ResizeObserver(() => sendHeight());
+resizeObserver.observe(document.body);
+window.addEventListener('load', sendHeight);
+
+// Re-send height on tab switch — now handled inside showPage()
+
+</script>
+</body>
+</html>
